@@ -2,12 +2,13 @@ const { response } = require('express');
 const Category = require('../../models/Category');
 const Post = require('../../models/Post');
 const { createValidation } = require('../../validations/posts.validation');
+const transform = require('../../transformers/posts/post.transformer');
 
 exports.getAll = async (req, res) => {
 
     try {
         const posts = await Post.find().populate('category');
-        res.json({message: 'article', result: posts});
+        res.json({message: 'article', result: await transform.collection(posts)});
     } catch (error) {
         res.json({message: error});
     }
@@ -16,8 +17,8 @@ exports.getAll = async (req, res) => {
 exports.findOne = async (req, res) => {
     const id = req.params.id
     try {
-        const posts = await Post.findById(id);
-        res.json({message: 'article', result:posts});
+        const post = await Post.findById(id).populate('category');
+        res.json({message: 'article', result: await transform.item(post)});
     } catch (error) {
         res.json({message: error});
     }

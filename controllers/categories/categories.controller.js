@@ -1,11 +1,12 @@
 const Category = require('../../models/Category');
 const validation = require('../../validations/category.validation');
+const transform = require('../../transformers/category/category.transformer');
 
 exports.getAll = async (req, res) => {
     try {
         const categories = await Category.find().populate('posts');
         
-        res.json({message: 'categories', result: categories});
+        res.json({message: 'categories', result: transform.collection(categories)});
     } catch (error) {
         res.status(500).json({message: Error});
     }

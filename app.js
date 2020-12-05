@@ -1,14 +1,14 @@
 const express  = require('express');
 const app      = express();
-const mongoose = require('mongoose');
+const mongoose = require('./config/database');
 const bodyParser = require('body-parser');
 const cors      = require('cors');
-
-require('dotenv/config');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB Connection Error:'));
 
 app.get('/api', (req, res) => {
     res.send('hello world');
@@ -20,10 +20,6 @@ app.use('/api/auth', require('./routes/auth'));
 
 app.use('/api/category', require('./routes/category'));
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true });
+const port = process.env.PORT;
 
-app.listen(3000, console.log('server run'));
+app.listen(port, console.log(`server run on port ${port}`));
