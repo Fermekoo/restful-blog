@@ -24,7 +24,7 @@ exports.collection = async (data) => {
 }
 
 exports.item = async (data) => {
-    const post = await {
+    const post = {
         id: data._id,
         postTitle: data.title,
         postDescription: data.description,

@@ -1,4 +1,4 @@
-exports.item = (data) => {
+exports.item = async (data) => {
     const category = {
         categoryId: data._id,
         categoryName: data.category
@@ -7,10 +7,10 @@ exports.item = (data) => {
     return category;
 }
 
-exports.collection = (data) => {
+exports.collection = async (data) => {
     const categories = [];
 
-    data.forEach(element => {
+   await data.forEach(element => {
         const category = {
             categoryId: element._id,
             categoryName: element.category

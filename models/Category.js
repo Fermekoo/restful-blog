@@ -9,6 +9,10 @@ const CategorySchema = mongoose.Schema({
         type: Date,
         default: Date.now 
     },
+    updated_at: {
+            type: Date
+    },
+
     posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Posts'}]
 });
 

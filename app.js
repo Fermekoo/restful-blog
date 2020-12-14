@@ -1,12 +1,13 @@
 const express  = require('express');
 const app      = express();
 const mongoose = require('./config/database');
-const bodyParser = require('body-parser');
-const cors      = require('cors');
+const cors     = require('cors');
+const helmet   = require('helmet'); 
 
+app.use(helmet());
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB Connection Error:'));
 
